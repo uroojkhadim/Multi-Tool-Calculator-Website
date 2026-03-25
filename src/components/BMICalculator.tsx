@@ -31,11 +31,11 @@ const BMICalculator: React.FC = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Underweight': return 'text-blue-400';
-      case 'Normal': return 'text-emerald-400';
-      case 'Overweight': return 'text-orange-400';
-      case 'Obese': return 'text-rose-500';
-      default: return 'text-white';
+      case 'Underweight': return 'text-blue-500';
+      case 'Normal': return 'text-emerald-500';
+      case 'Overweight': return 'text-orange-500';
+      case 'Obese': return 'text-rose-600';
+      default: return 'text-current';
     }
   };
 

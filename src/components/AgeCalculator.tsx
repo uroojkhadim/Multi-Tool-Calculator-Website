@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory } from '../context/HistoryContext';
 import { Calendar, Cake, Sparkles, Clock, MapPin } from 'lucide-react';
 import { differenceInYears, differenceInMonths, differenceInDays, addYears, addMonths, format } from 'date-fns';
+import { useTheme } from '../context/ThemeContext';
 
 const AgeCalculator: React.FC = () => {
   const [birthDate, setBirthDate] = useState('');
   const [age, setAge] = useState<{ years: number; months: number; days: number; nextBirthday: number } | null>(null);
+  const { theme } = useTheme();
   const { addHistory } = useHistory();
 
   const calculateAge = useCallback(() => {
@@ -63,7 +65,7 @@ const AgeCalculator: React.FC = () => {
               type="date"
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
-              className="premium-input [color-scheme:dark]"
+              className={`premium-input ${theme === 'dark' ? '[color-scheme:dark]' : '[color-scheme:light]'}`}
             />
             <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 opacity-10 group-focus-within:text-accent-blue transition-colors pointer-events-none" />
           </div>

@@ -28,11 +28,61 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
         setActiveTab={setActiveTab}
       />
 
-      {/* Refined Mesh Background - More Subtle */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-accent-purple/10 rounded-full blur-[160px] animate-blob" />
-        <div className="absolute top-[10%] right-[-20%] w-[50%] h-[50%] bg-accent-blue/10 rounded-full blur-[140px] animate-blob [animation-delay:2s]" />
-        <div className="absolute bottom-[-20%] left-[10%] w-[50%] h-[50%] bg-accent-pink/5 rounded-full blur-[150px] animate-blob [animation-delay:4s]" />
+      {/* Refined Mesh Background - Enhanced with Vibrant Colors */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-[-10%] left-[-5%] w-[70%] h-[70%] bg-gradient-to-br from-accent-purple/30 to-transparent rounded-full blur-[120px] opacity-60" 
+        />
+        <motion.div 
+          animate={{
+            scale: [1, 1.1, 1],
+            x: [0, -40, 0],
+            y: [0, 60, 0],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+          className="absolute top-[15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-accent-blue/30 to-transparent rounded-full blur-[110px] opacity-50" 
+        />
+        <motion.div 
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, 30, 0],
+            y: [0, 40, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4
+          }}
+          className="absolute bottom-[-15%] left-[5%] w-[65%] h-[65%] bg-gradient-to-br from-accent-pink/20 to-transparent rounded-full blur-[130px] opacity-40" 
+        />
+        <motion.div 
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-[40%] left-[30%] w-[40%] h-[40%] bg-accent-purple/10 rounded-full blur-[100px]" 
+        />
       </div>
 
       {/* Main Content Area Wrapper */}

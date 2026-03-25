@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
 
       {/* Main Menu */}
       <div className="flex-1 space-y-2 overflow-y-auto custom-scrollbar">
-        <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-4 ml-3 ${theme === 'dark' ? 'text-white/20' : 'text-black/30'}`}>Calculators</p>
+        <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-4 ml-3 ${theme === 'dark' ? 'text-white/20' : 'text-slate-400'}`}>Calculators</p>
         {menuItems.map((item) => (
           <button
             key={item.id}
@@ -71,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
             className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${
               activeTab === item.id 
                 ? 'bg-accent-purple/20 text-current border border-accent-purple/20 shadow-[0_0_20px_rgba(139,92,246,0.1)]' 
-                : `${theme === 'dark' ? 'text-white/40' : 'text-black/40'} hover:bg-slate-200/50 dark:hover:bg-slate-700/30 hover:text-current`
+                : `${theme === 'dark' ? 'text-white/40' : 'text-slate-600'} hover:bg-black/5 dark:hover:bg-white/5 hover:text-current`
             }`}
           >
             <div className={`transition-transform duration-300 group-hover:scale-110 ${
@@ -90,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
         ))}
 
         <div className="pt-8 space-y-2">
-          <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-4 ml-3 ${theme === 'dark' ? 'text-white/20' : 'text-black/30'}`}>App</p>
+          <p className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-4 ml-3 ${theme === 'dark' ? 'text-white/20' : 'text-slate-400'}`}>App</p>
           {secondaryItems.map((item) => (
             <button
               key={item.id}
@@ -101,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
               className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${
                 activeTab === item.id 
                   ? 'bg-accent-purple/20 text-current border border-accent-purple/20 shadow-[0_0_20px_rgba(139,92,246,0.1)]' 
-                  : `${theme === 'dark' ? 'text-white/40' : 'text-black/40'} hover:bg-slate-200/50 dark:hover:bg-slate-700/30 hover:text-current`
+                  : `${theme === 'dark' ? 'text-white/40' : 'text-slate-600'} hover:bg-black/5 dark:hover:bg-white/5 hover:text-current`
               }`}
             >
               <div className={`transition-transform duration-300 group-hover:scale-110 ${
@@ -124,7 +124,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
       {/* Footer */}
       <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/5">
         <div className={`p-4 rounded-2xl border border-black/5 dark:border-white/5 ${
-          theme === 'dark' ? 'bg-[#1e293b]/50' : 'bg-[#f1f5f9]'
+          theme === 'dark' ? 'bg-white/5' : 'bg-black/5'
         }`}>
           <p className={`text-[10px] font-medium mb-1 ${theme === 'dark' ? 'text-white/30' : 'text-black/30'}`}>PRO PLAN</p>
           <p className={`text-xs font-semibold mb-3 ${theme === 'dark' ? 'text-white/60' : 'text-black/60'}`}>Unlimited Calculations</p>
@@ -158,7 +158,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className={`fixed top-0 left-0 bottom-0 w-[280px] backdrop-blur-3xl border-r border-black/5 dark:border-white/5 z-[70] flex flex-col lg:hidden shadow-2xl ${
-                theme === 'dark' ? 'bg-[#1e293b]/95' : 'bg-[#f1f5f9]/95'
+                theme === 'dark' ? 'bg-[#020617]/95' : 'bg-white/95'
               }`}
             >
               {SidebarContent}
@@ -169,7 +169,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, activeTab, setActive
 
       {/* Desktop Persistent Sidebar */}
       <aside className={`hidden lg:flex flex-col w-[280px] backdrop-blur-3xl border-r border-black/5 dark:border-white/5 z-50 sticky top-0 h-screen ${
-        theme === 'dark' ? 'bg-[#1e293b]/40' : 'bg-[#f1f5f9]/60'
+        theme === 'dark' ? 'bg-white/5' : 'bg-white/60'
       }`}>
         {SidebarContent}
       </aside>

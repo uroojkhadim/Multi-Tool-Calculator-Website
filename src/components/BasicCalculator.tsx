@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory } from '../context/HistoryContext';
+import { useTheme } from '../context/ThemeContext';
 
 const BasicCalculator: React.FC = () => {
   const [display, setDisplay] = useState('0');
   const [equation, setEquation] = useState('');
   const [isNewNumber, setIsNewNumber] = useState(true);
   const { addHistory } = useHistory();
+  const { theme } = useTheme();
   const displayRef = useRef<HTMLDivElement>(null);
 
   const handleNumber = useCallback((num: string) => {
