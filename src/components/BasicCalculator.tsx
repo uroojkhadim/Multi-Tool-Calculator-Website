@@ -138,7 +138,7 @@ const BasicCalculator: React.FC = () => {
         {buttons.map((btn, i) => (
           <motion.button
             key={i}
-            whileTap={{ scale: 0.92, brightness: 1.2 }}
+            whileTap={{ scale: 0.92 }}
             onClick={btn.onClick}
             className={`
               calc-btn text-3xl font-light
