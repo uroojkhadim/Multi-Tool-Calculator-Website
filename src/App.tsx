@@ -10,7 +10,7 @@ import History from './components/History';
 import { ThemeProvider } from './context/ThemeContext';
 import { HistoryProvider } from './context/HistoryContext';
 
-type Tab = 'basic' | 'bmi' | 'age' | 'currency' | 'percentage' | 'loan' | 'history';
+type Tab = 'basic' | 'bmi' | 'age' | 'currency' | 'percentage' | 'loan';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('basic');
@@ -23,7 +23,6 @@ const App: React.FC = () => {
       case 'currency': return <CurrencyConverter />;
       case 'percentage': return <PercentageCalculator />;
       case 'loan': return <LoanCalculator />;
-      case 'history': return <History />;
       default: return <BasicCalculator />;
     }
   };

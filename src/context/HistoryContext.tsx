@@ -20,8 +20,13 @@ const HistoryContext = createContext<HistoryContextType | undefined>(undefined);
 
 export const HistoryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [history, setHistory] = useState<HistoryItem[]>(() => {
-    const saved = localStorage.getItem('calc-history');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('calc-history');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('Failed to parse history from localStorage', e);
+      return [];
+    }
   });
 
   useEffect(() => {

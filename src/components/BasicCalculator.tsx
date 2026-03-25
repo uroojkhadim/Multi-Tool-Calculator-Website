@@ -1,42 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory } from '../context/HistoryContext';
-import { Delete, History as HistoryIcon } from 'lucide-react';
 
 const BasicCalculator: React.FC = () => {
   const [display, setDisplay] = useState('0');
   const [equation, setEquation] = useState('');
+  const [isNewNumber, setIsNewNumber] = useState(true);
   const { addHistory } = useHistory();
+  const displayRef = useRef<HTMLDivElement>(null);
 
-  const handleNumber = (num: string) => {
-    setDisplay(prev => (prev === '0' ? num : prev + num));
-  };
+  const handleNumber = useCallback((num: string) => {
+    setDisplay(prev => {
+      if (isNewNumber) {
+        setIsNewNumber(false);
+        return num === '.' ? '0.' : num;
+      }
+      if (num === '.' && prev.includes('.')) return prev;
+      if (prev === '0' && num !== '.') return num;
+      if (prev.length >= 9) return prev; // iPhone limit-ish
+      return prev + num;
+    });
+  }, [isNewNumber]);
 
-  const handleOperator = (op: string) => {
-    setEquation(prev => prev + display + ' ' + op + ' ');
-    setDisplay('0');
-  };
+  const handleOperator = useCallback((op: string) => {
+    setEquation(display + ' ' + op + ' ');
+    setIsNewNumber(true);
+  }, [display]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setDisplay('0');
     setEquation('');
-  };
+    setIsNewNumber(true);
+  }, []);
 
-  const handleBackspace = () => {
-    setDisplay(prev => (prev.length > 1 ? prev.slice(0, -1) : '0'));
-  };
-
-  const handleCalculate = () => {
+  const handleCalculate = useCallback(() => {
+    if (!equation) return;
     try {
       const fullEquation = equation + display;
-      // Replace symbols for evaluation
       const evalStr = fullEquation.replace(/×/g, '*').replace(/÷/g, '/');
       // eslint-disable-next-line no-new-func
       const result = new Function(`return ${evalStr}`)();
       
       if (!isFinite(result)) throw new Error('Result not finite');
       
-      const formattedResult = result.toString();
+      let formattedResult = Number(result.toFixed(8)).toString();
+      if (formattedResult.length > 9) {
+        formattedResult = result.toExponential(4);
+      }
+      
       addHistory({
         type: 'basic',
         expression: fullEquation,
@@ -45,34 +56,42 @@ const BasicCalculator: React.FC = () => {
       
       setDisplay(formattedResult);
       setEquation('');
+      setIsNewNumber(true);
     } catch (error) {
       setDisplay('Error');
       setTimeout(() => setDisplay('0'), 1500);
     }
-  };
+  }, [display, equation, addHistory]);
 
-  // Keyboard support
+  const handlePercent = useCallback(() => {
+    setDisplay(prev => (parseFloat(prev) / 100).toString());
+  }, []);
+
+  const handleToggleSign = useCallback(() => {
+    setDisplay(prev => (prev.startsWith('-') ? prev.slice(1) : '-' + prev));
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (/[0-9]/.test(e.key)) handleNumber(e.key);
       if (['+', '-', '*', '/'].includes(e.key)) {
-        const op = e.key === '*' ? '×' : e.key === '/' ? '÷' : e.key;
-        handleOperator(op);
+        const ops: Record<string, string> = { '*': '×', '/': '÷', '+': '+', '-': '-' };
+        handleOperator(ops[e.key]);
       }
       if (e.key === 'Enter' || e.key === '=') handleCalculate();
       if (e.key === 'Escape') handleClear();
-      if (e.key === 'Backspace') handleBackspace();
       if (e.key === '.') handleNumber('.');
+      if (e.key === '%') handlePercent();
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [display, equation]);
+  }, [handleNumber, handleOperator, handleCalculate, handleClear, handlePercent]);
 
   const buttons = [
-    { label: 'AC', type: 'func', onClick: handleClear },
-    { label: '±', type: 'func', onClick: () => setDisplay(prev => (prev.startsWith('-') ? prev.slice(1) : '-' + prev)) },
-    { label: '%', type: 'func', onClick: () => setDisplay(prev => (parseFloat(prev) / 100).toString()) },
+    { label: display === '0' && !equation ? 'AC' : 'C', type: 'func', onClick: handleClear },
+    { label: '±', type: 'func', onClick: handleToggleSign },
+    { label: '%', type: 'func', onClick: handlePercent },
     { label: '÷', type: 'op', onClick: () => handleOperator('÷') },
     { label: '7', type: 'num', onClick: () => handleNumber('7') },
     { label: '8', type: 'num', onClick: () => handleNumber('8') },
@@ -86,42 +105,50 @@ const BasicCalculator: React.FC = () => {
     { label: '2', type: 'num', onClick: () => handleNumber('2') },
     { label: '3', type: 'num', onClick: () => handleNumber('3') },
     { label: '+', type: 'op', onClick: () => handleOperator('+') },
-    { label: '0', type: 'num', onClick: () => handleNumber('0'), className: 'col-span-2' },
+    { label: '0', type: 'num', onClick: () => handleNumber('0'), className: 'col-span-2 !aspect-auto !rounded-[2.5rem] px-8 justify-start' },
     { label: '.', type: 'num', onClick: () => handleNumber('.') },
     { label: '=', type: 'op', onClick: handleCalculate },
   ];
 
+  // Dynamically scale text based on length
+  const getFontSize = (text: string) => {
+    if (text.length <= 6) return 'text-8xl';
+    if (text.length <= 7) return 'text-7xl';
+    if (text.length <= 8) return 'text-6xl';
+    return 'text-5xl';
+  };
+
   return (
-    <div className="glass-card w-full p-6 flex flex-col gap-6">
-      <div className="flex flex-col items-end gap-2 px-2 py-4 h-32 justify-end">
-        <div className="text-gray-500 dark:text-gray-400 text-lg font-medium overflow-hidden whitespace-nowrap">
+    <div className="glass-card w-full max-w-[380px] mx-auto p-5 flex flex-col gap-4 shadow-2xl border-white/10">
+      {/* Display */}
+      <div className="flex flex-col items-end justify-end px-4 pt-16 pb-4 h-56 rounded-[2rem] mb-2">
+        <div className="text-white/30 text-xl font-light mb-1 h-8 overflow-hidden tracking-wide">
           {equation}
         </div>
-        <motion.div 
-          key={display}
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-5xl font-bold tracking-tighter truncate w-full text-right"
+        <div 
+          ref={displayRef}
+          className={`font-light tracking-tighter text-white transition-all duration-200 w-full text-right ${getFontSize(display)}`}
         >
           {display}
-        </motion.div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3">
+      {/* Keypad */}
+      <div className="grid grid-cols-4 gap-3.5">
         {buttons.map((btn, i) => (
           <motion.button
             key={i}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.92, brightness: 1.2 }}
             onClick={btn.onClick}
             className={`
-              h-16 rounded-2xl flex items-center justify-center text-xl font-semibold transition-all duration-200
-              ${btn.type === 'num' ? 'bg-gray-200/50 dark:bg-gray-800/50 hover:bg-gray-300/50 dark:hover:bg-gray-700/50 text-gray-900 dark:text-white' : ''}
-              ${btn.type === 'op' ? 'bg-orange-500 hover:bg-orange-400 text-white shadow-lg shadow-orange-500/20' : ''}
-              ${btn.type === 'func' ? 'bg-gray-400/50 dark:bg-gray-600/50 hover:bg-gray-500/50 dark:hover:bg-gray-500/50 text-black dark:text-white' : ''}
+              calc-btn text-3xl font-light
+              ${btn.type === 'num' ? 'calc-btn-number' : ''}
+              ${btn.type === 'op' ? 'calc-btn-op' : ''}
+              ${btn.type === 'func' ? 'calc-btn-func !bg-white/20' : ''}
               ${btn.className || ''}
             `}
           >
-            {btn.label}
+            <span className="relative z-10">{btn.label}</span>
           </motion.button>
         ))}
       </div>

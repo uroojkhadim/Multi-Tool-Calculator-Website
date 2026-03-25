@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useHistory } from '../context/HistoryContext';
-import { Ruler } from 'lucide-react';
+import { Ruler, Info, User, ChevronRight } from 'lucide-react';
 
 const BMICalculator: React.FC = () => {
   const [weight, setWeight] = useState('');
@@ -9,9 +9,9 @@ const BMICalculator: React.FC = () => {
   const [result, setResult] = useState<{ bmi: number; category: string } | null>(null);
   const { addHistory } = useHistory();
 
-  const calculateBMI = () => {
+  const calculateBMI = useCallback(() => {
     const w = parseFloat(weight);
-    const h = parseFloat(height) / 100; // cm to m
+    const h = parseFloat(height) / 100;
     if (w > 0 && h > 0) {
       const bmi = w / (h * h);
       let category = '';
@@ -27,92 +27,140 @@ const BMICalculator: React.FC = () => {
         result: `BMI: ${bmi.toFixed(1)} (${category})`,
       });
     }
+  }, [weight, height, addHistory]);
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'Underweight': return 'text-blue-400';
+      case 'Normal': return 'text-emerald-400';
+      case 'Overweight': return 'text-orange-400';
+      case 'Obese': return 'text-rose-500';
+      default: return 'text-white';
+    }
   };
 
   return (
-    <div className="glass-card w-full p-8 flex flex-col gap-8">
-      <div className="flex items-center gap-4">
-        <div className="p-3 bg-blue-500/20 rounded-2xl">
-          <Ruler className="w-6 h-6 text-blue-500" />
+    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden border-white/10">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-5">
+          <div className="relative">
+            <div className="absolute inset-0 bg-accent-purple blur-md opacity-20" />
+            <div className="relative p-3.5 bg-white/5 border border-white/10 rounded-[1.25rem]">
+              <Ruler className="w-6 h-6 text-accent-purple" />
+            </div>
+          </div>
+          <div>
+            <h2 className="text-2xl font-semibold text-white tracking-tight">BMI Index</h2>
+            <p className="text-white/30 text-xs font-medium uppercase tracking-widest">Body Mass Index</p>
+          </div>
         </div>
-        <h2 className="text-2xl font-bold">BMI Calculator</h2>
-      </div>
-
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-500 dark:text-gray-400 ml-1">Weight (kg)</label>
-          <input
-            type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            className="w-full h-14 bg-gray-200/50 dark:bg-gray-800/50 rounded-2xl px-6 text-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            placeholder="0"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-500 dark:text-gray-400 ml-1">Height (cm)</label>
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="w-full h-14 bg-gray-200/50 dark:bg-gray-800/50 rounded-2xl px-6 text-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            placeholder="0"
-          />
-        </div>
-
-        <button
-          onClick={calculateBMI}
-          className="w-full h-14 bg-blue-500 hover:bg-blue-400 text-white rounded-2xl text-xl font-bold shadow-lg shadow-blue-500/20 transition-all active:scale-95"
-        >
-          Calculate BMI
+        <button className="p-2.5 hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-white/5">
+          <Info className="w-5 h-5 text-white/20" />
         </button>
       </div>
 
-      {result && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="p-6 bg-gray-100/50 dark:bg-gray-900/50 rounded-3xl text-center space-y-6 border border-white/20"
-        >
-          <div className="space-y-1">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest">Your BMI</div>
-            <div className="text-5xl font-black text-blue-500">{result.bmi.toFixed(1)}</div>
-            <div className={`text-xl font-bold ${
-              result.category === 'Normal' ? 'text-green-500' : 
-              result.category === 'Underweight' ? 'text-blue-400' : 'text-orange-500'
-            }`}>
-              {result.category}
-            </div>
-          </div>
-
-          {/* BMI Gauge */}
-          <div className="relative h-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden flex">
-            <div className="h-full bg-blue-400" style={{ width: '18.5%' }} />
-            <div className="h-full bg-green-500" style={{ width: '6.5%' }} />
-            <div className="h-full bg-yellow-500" style={{ width: '5%' }} />
-            <div className="h-full bg-orange-500" style={{ width: '10%' }} />
-            <div className="h-full bg-red-500" style={{ width: '60%' }} />
-            
-            {/* Pointer */}
-            <motion.div 
-              className="absolute top-0 bottom-0 w-1 bg-white shadow-lg z-10"
-              initial={{ left: 0 }}
-              animate={{ left: `${Math.min(Math.max((result.bmi / 40) * 100, 0), 100)}%` }}
-              transition={{ type: 'spring', damping: 15 }}
+      <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+              Weight (kg)
+            </label>
+            <input
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              className="premium-input"
+              placeholder="00.0"
             />
           </div>
-          
-          <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-tighter">
-            <span>Underweight</span>
-            <span>Normal</span>
-            <span>Overweight</span>
-            <span>Obese</span>
+
+          <div className="space-y-3">
+            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+              Height (cm)
+            </label>
+            <input
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              className="premium-input"
+              placeholder="000"
+            />
           </div>
-        </motion.div>
-      )}
+        </div>
+
+        <motion.button
+          whileHover={{ scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+          whileTap={{ scale: 0.98 }}
+          onClick={calculateBMI}
+          className="w-full h-16 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-lg font-semibold border border-white/10 transition-all shadow-xl"
+        >
+          Calculate Result
+        </motion.button>
+      </div>
+
+      <AnimatePresence mode="wait">
+        {result && (
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="p-10 bg-gradient-to-b from-white/[0.05] to-transparent rounded-[2.5rem] border border-white/10 space-y-10 relative overflow-hidden"
+          >
+            <div className="text-center space-y-3">
+              <div className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Analysis Complete</div>
+              <div className="text-8xl font-light tracking-tighter text-white">
+                {result.bmi.toFixed(1)}
+              </div>
+              <div className={`text-2xl font-medium tracking-tight ${getCategoryColor(result.category)}`}>
+                {result.category}
+              </div>
+            </div>
+
+            {/* Premium Gauge */}
+            <div className="space-y-5">
+              <div className="relative h-2 w-full bg-white/5 rounded-full overflow-hidden flex gap-1.5 p-0.5">
+                <div className="h-full bg-blue-500/40 rounded-full" style={{ width: '18.5%' }} />
+                <div className="h-full bg-emerald-500/40 rounded-full" style={{ width: '25%' }} />
+                <div className="h-full bg-orange-500/40 rounded-full" style={{ width: '15%' }} />
+                <div className="h-full bg-rose-500/40 rounded-full flex-1" />
+                
+                <motion.div 
+                  className="absolute top-[-6px] bottom-[-6px] w-2 bg-white shadow-[0_0_20px_white] z-10 rounded-full border border-black/40"
+                  initial={{ left: 0 }}
+                  animate={{ left: `${Math.min(Math.max((result.bmi / 40) * 100, 2), 98)}%` }}
+                  transition={{ type: 'spring', damping: 20, stiffness: 80 }}
+                />
+              </div>
+              
+              <div className="flex justify-between text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] px-1">
+                <span>Under</span>
+                <span>Healthy</span>
+                <span>Over</span>
+                <span>Obese</span>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-white/5 flex items-start gap-4">
+              <div className="p-2 bg-white/5 rounded-lg">
+                <Info className="w-4 h-4 text-white/30" />
+              </div>
+              <p className="text-white/30 text-[11px] leading-relaxed font-medium">
+                A healthy BMI range is 18.5 - 24.9. Please consult a professional for a detailed health assessment.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+
+const WeightIcon = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 2 5 5-13 13L2 15Z"/><path d="M17.6 5.1 18.9 6.4"/><path d="m11.8 10.9 1.3 1.3"/><path d="m8.9 13.8 1.3 1.3"/><path d="m6 16.7 1.3 1.3"/></svg>
+);
+
+const HeightIconSmall = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 3v18"/><path d="M3 12h12"/><path d="m12 9 3 3-3 3"/></svg>
+);
 
 export default BMICalculator;
