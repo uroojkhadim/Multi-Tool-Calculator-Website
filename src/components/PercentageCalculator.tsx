@@ -37,7 +37,7 @@ const PercentageCalculator: React.FC = () => {
   }, [value, percent, addHistory]);
 
   return (
-    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden border-white/10">
+    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden">
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent-pink/10 blur-3xl rounded-full" />
       
       <div className="flex items-center gap-5">
@@ -48,15 +48,15 @@ const PercentageCalculator: React.FC = () => {
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-white tracking-tight">Percentage</h2>
-          <p className="text-white/30 text-xs font-medium uppercase tracking-widest">Rapid Calculation</p>
+          <h2 className="text-2xl font-semibold tracking-tight">Percentage</h2>
+          <p className="opacity-30 text-xs font-medium uppercase tracking-widest">Rapid Calculation</p>
         </div>
       </div>
 
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1">Base Number</label>
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1">Base Number</label>
             <input
               type="number"
               value={value}
@@ -67,7 +67,7 @@ const PercentageCalculator: React.FC = () => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1">Percent (%)</label>
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1">Percent (%)</label>
             <input
               type="number"
               value={percent}
@@ -80,18 +80,18 @@ const PercentageCalculator: React.FC = () => {
 
         <div className="grid grid-cols-3 gap-4">
           {[
-            { id: 'of', label: 'Of', icon: Target, color: 'text-white/40' },
+            { id: 'of', label: 'Of', icon: Target, color: 'text-slate-400' },
             { id: 'increase', label: 'Add', icon: TrendingUp, color: 'text-emerald-400/60' },
             { id: 'decrease', label: 'Sub', icon: TrendingDown, color: 'text-rose-400/60' },
           ].map((btn) => (
             <motion.button
               key={btn.id}
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+              whileHover={{ scale: 1.05, backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
               whileTap={{ scale: 0.95 }}
               onClick={() => calculatePercentage(btn.id as any)}
-              className="flex flex-col items-center justify-center gap-3 h-28 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white transition-all hover:border-white/20 group"
+              className="flex flex-col items-center justify-center gap-3 h-28 bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-[2rem] transition-all hover:border-black/20 dark:hover:border-white/20 group"
             >
-              <btn.icon className={`w-6 h-6 ${btn.color} group-hover:text-white transition-colors`} />
+              <btn.icon className={`w-6 h-6 ${btn.color} group-hover:text-current transition-colors`} />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{btn.label}</span>
             </motion.button>
           ))}
@@ -103,17 +103,17 @@ const PercentageCalculator: React.FC = () => {
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="p-10 bg-gradient-to-br from-white/[0.05] to-transparent rounded-[3rem] border border-white/10 relative overflow-hidden group"
+              className="p-10 bg-gradient-to-br from-accent-pink/10 to-transparent rounded-[3rem] border border-accent-pink/20 relative overflow-hidden group"
             >
               <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                <div className="text-[10px] font-bold opacity-30 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
                   <Zap className="w-3.5 h-3.5 text-accent-pink" />
                   Calculation Result
                 </div>
-                <div className="text-7xl font-bold text-white tracking-tighter mb-2">
+                <div className="text-7xl font-bold tracking-tighter mb-2">
                   {result.value}
                 </div>
-                <div className="text-xs font-medium text-white/30 tracking-wide">
+                <div className="text-xs font-medium opacity-30 tracking-wide">
                   {result.type}
                 </div>
               </div>

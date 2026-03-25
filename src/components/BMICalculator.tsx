@@ -40,7 +40,7 @@ const BMICalculator: React.FC = () => {
   };
 
   return (
-    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden border-white/10">
+    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-5">
           <div className="relative">
@@ -50,19 +50,19 @@ const BMICalculator: React.FC = () => {
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-semibold text-white tracking-tight">BMI Index</h2>
-            <p className="text-white/30 text-xs font-medium uppercase tracking-widest">Body Mass Index</p>
+            <h2 className="text-2xl font-semibold tracking-tight">BMI Index</h2>
+            <p className="opacity-30 text-xs font-medium uppercase tracking-widest">Body Mass Index</p>
           </div>
         </div>
         <button className="p-2.5 hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-white/5">
-          <Info className="w-5 h-5 text-white/20" />
+          <Info className="w-5 h-5 opacity-20" />
         </button>
       </div>
 
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
               Weight (kg)
             </label>
             <input
@@ -75,7 +75,7 @@ const BMICalculator: React.FC = () => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
               Height (cm)
             </label>
             <input
@@ -89,10 +89,10 @@ const BMICalculator: React.FC = () => {
         </div>
 
         <motion.button
-          whileHover={{ scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={calculateBMI}
-          className="w-full h-16 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-lg font-semibold border border-white/10 transition-all shadow-xl"
+          className="w-full h-16 bg-accent-purple/10 hover:bg-accent-purple/20 text-accent-purple rounded-2xl text-lg font-semibold border border-accent-purple/20 transition-all shadow-xl"
         >
           Calculate Result
         </motion.button>
@@ -107,8 +107,8 @@ const BMICalculator: React.FC = () => {
             className="p-10 bg-gradient-to-b from-white/[0.05] to-transparent rounded-[2.5rem] border border-white/10 space-y-10 relative overflow-hidden"
           >
             <div className="text-center space-y-3">
-              <div className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Analysis Complete</div>
-              <div className="text-8xl font-light tracking-tighter text-white">
+              <div className="text-[10px] font-bold opacity-20 uppercase tracking-[0.3em]">Analysis Complete</div>
+              <div className="text-8xl font-light tracking-tighter">
                 {result.bmi.toFixed(1)}
               </div>
               <div className={`text-2xl font-medium tracking-tight ${getCategoryColor(result.category)}`}>
@@ -118,7 +118,7 @@ const BMICalculator: React.FC = () => {
 
             {/* Premium Gauge */}
             <div className="space-y-5">
-              <div className="relative h-2 w-full bg-white/5 rounded-full overflow-hidden flex gap-1.5 p-0.5">
+              <div className="relative h-2 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden flex gap-1.5 p-0.5">
                 <div className="h-full bg-blue-500/40 rounded-full" style={{ width: '18.5%' }} />
                 <div className="h-full bg-emerald-500/40 rounded-full" style={{ width: '25%' }} />
                 <div className="h-full bg-orange-500/40 rounded-full" style={{ width: '15%' }} />
@@ -132,7 +132,7 @@ const BMICalculator: React.FC = () => {
                 />
               </div>
               
-              <div className="flex justify-between text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] px-1">
+              <div className="flex justify-between text-[9px] font-bold opacity-20 uppercase tracking-[0.2em] px-1">
                 <span>Under</span>
                 <span>Healthy</span>
                 <span>Over</span>
@@ -140,11 +140,11 @@ const BMICalculator: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-white/5 flex items-start gap-4">
-              <div className="p-2 bg-white/5 rounded-lg">
-                <Info className="w-4 h-4 text-white/30" />
+            <div className="pt-6 border-t border-black/5 dark:border-white/5 flex items-start gap-4">
+              <div className="p-2 bg-black/5 dark:bg-white/5 rounded-lg">
+                <Info className="w-4 h-4 opacity-30" />
               </div>
-              <p className="text-white/30 text-[11px] leading-relaxed font-medium">
+              <p className="opacity-30 text-[11px] leading-relaxed font-medium">
                 A healthy BMI range is 18.5 - 24.9. Please consult a professional for a detailed health assessment.
               </p>
             </div>

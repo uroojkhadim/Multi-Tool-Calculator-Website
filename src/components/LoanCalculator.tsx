@@ -39,7 +39,7 @@ const LoanCalculator: React.FC = () => {
   }, [amount, rate, term, termType, addHistory]);
 
   return (
-    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden border-white/10">
+    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden">
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent-blue/10 blur-3xl rounded-full" />
       
       <div className="flex items-center gap-5">
@@ -50,14 +50,14 @@ const LoanCalculator: React.FC = () => {
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-white tracking-tight">Loan EMI</h2>
-          <p className="text-white/30 text-xs font-medium uppercase tracking-widest">Financing Planner</p>
+          <h2 className="text-2xl font-semibold tracking-tight">Loan EMI</h2>
+          <p className="opacity-30 text-xs font-medium uppercase tracking-widest">Financing Planner</p>
         </div>
       </div>
 
       <div className="space-y-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+          <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
             <Wallet className="w-3.5 h-3.5" /> Principal Amount
           </label>
           <div className="relative group">
@@ -65,10 +65,10 @@ const LoanCalculator: React.FC = () => {
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full h-20 bg-white/[0.03] border border-white/5 rounded-[2rem] px-10 text-4xl font-light text-white focus:outline-none focus:ring-2 focus:ring-accent-blue/30 focus:bg-white/[0.06] transition-all placeholder:text-white/10"
+              className="w-full h-20 bg-white/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-[2rem] px-10 text-4xl font-light focus:outline-none focus:ring-2 focus:ring-accent-blue/30 focus:bg-white/[0.06] transition-all placeholder:text-black/10 dark:placeholder:text-white/10"
               placeholder="0.00"
             />
-            <div className="absolute right-10 top-1/2 -translate-y-1/2 text-white/10 font-medium text-2xl tracking-tighter">
+            <div className="absolute right-10 top-1/2 -translate-y-1/2 opacity-10 font-medium text-2xl tracking-tighter">
               USD
             </div>
           </div>
@@ -76,7 +76,7 @@ const LoanCalculator: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
               <PieChart className="w-3.5 h-3.5" /> Interest Rate (%)
             </label>
             <input
@@ -88,7 +88,7 @@ const LoanCalculator: React.FC = () => {
             />
           </div>
           <div className="space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
               <CalendarIcon className="w-3.5 h-3.5" /> Loan Duration
             </label>
             <div className="relative">
@@ -101,7 +101,7 @@ const LoanCalculator: React.FC = () => {
               />
               <button
                 onClick={() => setTermType(prev => prev === 'years' ? 'months' : 'years')}
-                className="absolute right-2 top-2 bottom-2 px-4 bg-white/10 text-white/70 rounded-xl text-[10px] font-bold uppercase hover:bg-white/20 hover:text-white transition-all border border-white/5"
+                className="absolute right-2 top-2 bottom-2 px-4 bg-black/5 dark:bg-white/10 text-current opacity-70 rounded-xl text-[10px] font-bold uppercase hover:bg-black/10 dark:hover:bg-white/20 transition-all border border-black/5 dark:border-white/5"
               >
                 {termType}
               </button>
@@ -110,10 +110,10 @@ const LoanCalculator: React.FC = () => {
         </div>
 
         <motion.button
-          whileHover={{ scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={calculateEMI}
-          className="w-full h-16 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-lg font-semibold border border-white/10 transition-all shadow-xl"
+          className="w-full h-16 bg-accent-blue/10 hover:bg-accent-blue/20 text-accent-blue rounded-2xl text-lg font-semibold border border-accent-blue/20 transition-all shadow-xl"
         >
           Generate Repayment Plan
         </motion.button>
@@ -132,8 +132,8 @@ const LoanCalculator: React.FC = () => {
                     <CreditCard className="w-3.5 h-3.5" />
                     Monthly Repayment
                   </div>
-                  <div className="text-7xl font-bold text-white tracking-tighter flex items-baseline gap-2">
-                    <span className="text-2xl font-medium text-white/20 tracking-normal">$</span>
+                  <div className="text-7xl font-bold tracking-tighter flex items-baseline gap-2">
+                    <span className="text-2xl font-medium opacity-20 tracking-normal">$</span>
                     {result.emi}
                   </div>
                 </div>
@@ -142,17 +142,17 @@ const LoanCalculator: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-8 bg-white/[0.03] rounded-[2.5rem] border border-white/5 flex flex-col items-center text-center group hover:border-white/10 transition-colors">
-                  <div className="text-2xl font-bold text-white tracking-tight">${result.totalInterest}</div>
-                  <div className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mt-2">Total Interest</div>
+                <div className="p-8 bg-black/[0.03] dark:bg-white/[0.03] rounded-[2.5rem] border border-black/5 dark:border-white/5 flex flex-col items-center text-center group hover:border-black/10 dark:hover:border-white/10 transition-colors">
+                  <div className="text-2xl font-bold tracking-tight">${result.totalInterest}</div>
+                  <div className="text-[9px] font-bold opacity-20 uppercase tracking-[0.2em] mt-2">Total Interest</div>
                 </div>
-                <div className="p-8 bg-white/[0.03] rounded-[2.5rem] border border-white/5 flex flex-col items-center text-center group hover:border-white/10 transition-colors">
-                  <div className="text-2xl font-bold text-white tracking-tight">${result.totalPayment}</div>
-                  <div className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mt-2">Total Payable</div>
+                <div className="p-8 bg-black/[0.03] dark:bg-white/[0.03] rounded-[2.5rem] border border-black/5 dark:border-white/5 flex flex-col items-center text-center group hover:border-black/10 dark:hover:border-white/10 transition-colors">
+                  <div className="text-2xl font-bold tracking-tight">${result.totalPayment}</div>
+                  <div className="text-[9px] font-bold opacity-20 uppercase tracking-[0.2em] mt-2">Total Payable</div>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-center justify-center gap-3 text-white/20">
+              <div className="pt-4 flex items-center justify-center gap-3 opacity-20">
                 <Info className="w-3.5 h-3.5" />
                 <span className="text-[10px] font-bold uppercase tracking-[0.1em]">Figures are estimates based on standard EMI logic</span>
               </div>

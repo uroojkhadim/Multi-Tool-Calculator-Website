@@ -56,7 +56,7 @@ const CurrencyConverter: React.FC = () => {
   };
 
   return (
-    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden border-white/10">
+    <div className="glass-card w-full p-8 flex flex-col gap-10 shadow-2xl relative overflow-hidden">
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full" />
       
       <div className="flex items-center justify-between">
@@ -68,30 +68,30 @@ const CurrencyConverter: React.FC = () => {
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-semibold text-white tracking-tight">Currency</h2>
-            <p className="text-white/30 text-xs font-medium uppercase tracking-widest">Live Exchange Rates</p>
+            <h2 className="text-2xl font-semibold tracking-tight">Currency</h2>
+            <p className="opacity-30 text-xs font-medium uppercase tracking-widest">Live Exchange Rates</p>
           </div>
         </div>
         <button 
           onClick={fetchRates}
           className={`p-2.5 hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-white/5 ${loading ? 'animate-spin' : ''}`}
         >
-          <RefreshCcw className="w-5 h-5 text-white/20" />
+          <RefreshCcw className="w-5 h-5 opacity-20" />
         </button>
       </div>
 
       <div className="space-y-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1">Amount to Convert</label>
+          <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1">Amount to Convert</label>
           <div className="relative group">
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full h-24 bg-white/[0.03] border border-white/5 rounded-[2rem] px-10 text-5xl font-light text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.06] transition-all placeholder:text-white/10"
+              className="w-full h-24 bg-white/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-[2rem] px-10 text-5xl font-light focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.06] transition-all placeholder:text-black/10 dark:placeholder:text-white/10"
               placeholder="0.00"
             />
-            <div className="absolute right-10 top-1/2 -translate-y-1/2 text-white/10 font-medium text-2xl tracking-tighter">
+            <div className="absolute right-10 top-1/2 -translate-y-1/2 opacity-10 font-medium text-2xl tracking-tighter">
               {from}
             </div>
           </div>
@@ -99,16 +99,16 @@ const CurrencyConverter: React.FC = () => {
 
         <div className="flex flex-col md:flex-row items-center gap-4">
           <div className="flex-1 w-full space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1">From</label>
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1">From</label>
             <div className="relative">
               <select
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="w-full h-16 bg-white/[0.03] border border-white/5 rounded-2xl px-6 text-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all appearance-none cursor-pointer"
+                className="w-full h-16 bg-white/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-2xl px-6 text-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all appearance-none cursor-pointer"
               >
-                {currencies.map(c => <option key={c} value={c} className="bg-[#0f172a] text-white">{c}</option>)}
+                {currencies.map(c => <option key={c} value={c} className="bg-slate-800 text-white">{c}</option>)}
               </select>
-              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20">
                 <ArrowLeftRight className="w-4 h-4 rotate-90 md:rotate-0" />
               </div>
             </div>
@@ -124,16 +124,16 @@ const CurrencyConverter: React.FC = () => {
           </motion.button>
 
           <div className="flex-1 w-full space-y-3">
-            <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] ml-1">To</label>
+            <label className="text-[10px] font-bold opacity-30 uppercase tracking-[0.2em] ml-1">To</label>
             <div className="relative">
               <select
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
-                className="w-full h-16 bg-white/[0.03] border border-white/5 rounded-2xl px-6 text-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all appearance-none cursor-pointer"
+                className="w-full h-16 bg-white/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-2xl px-6 text-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all appearance-none cursor-pointer"
               >
-                {currencies.map(c => <option key={c} value={c} className="bg-[#0f172a] text-white">{c}</option>)}
+                {currencies.map(c => <option key={c} value={c} className="bg-slate-800 text-white">{c}</option>)}
               </select>
-              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20">
                 <ArrowLeftRight className="w-4 h-4 rotate-90 md:rotate-0" />
               </div>
             </div>
@@ -153,11 +153,11 @@ const CurrencyConverter: React.FC = () => {
                   <TrendingUp className="w-3.5 h-3.5" />
                   Market Rate
                 </div>
-                <div className="text-7xl font-bold text-white tracking-tighter mb-3 flex items-baseline gap-3">
+                <div className="text-7xl font-bold tracking-tighter mb-3 flex items-baseline gap-3">
                   {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-                  <span className="text-2xl font-medium text-white/20 tracking-normal">{to}</span>
+                  <span className="text-2xl font-medium opacity-20 tracking-normal">{to}</span>
                 </div>
-                <div className="px-4 py-1.5 bg-white/5 rounded-full text-[11px] text-white/30 font-semibold tracking-wide border border-white/5">
+                <div className="px-4 py-1.5 bg-white/5 rounded-full text-[11px] opacity-30 font-semibold tracking-wide border border-white/5">
                   1 {from} = {rates[to]?.toFixed(4)} {to}
                 </div>
               </div>
@@ -168,10 +168,10 @@ const CurrencyConverter: React.FC = () => {
         </AnimatePresence>
 
         <motion.button
-          whileHover={{ scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSave}
-          className="w-full h-16 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-lg font-semibold border border-white/10 transition-all shadow-xl"
+          className="w-full h-16 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 rounded-2xl text-lg font-semibold border border-emerald-500/20 transition-all shadow-xl"
         >
           Save to History
         </motion.button>

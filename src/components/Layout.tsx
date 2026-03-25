@@ -4,7 +4,7 @@ import { Sun, Moon, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from './Sidebar';
 
-type Tab = 'basic' | 'bmi' | 'age' | 'currency' | 'percentage' | 'loan';
+type Tab = 'basic' | 'bmi' | 'age' | 'currency' | 'percentage' | 'loan' | 'history' | 'settings' | 'support';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,7 +17,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) =>
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-[100dvh] flex flex-row items-stretch relative overflow-hidden bg-[#020617] font-sans selection:bg-accent-purple/30">
+    <div className={`min-h-[100dvh] flex flex-row items-stretch relative overflow-hidden font-sans selection:bg-accent-purple/30 ${
+      theme === 'dark' ? 'bg-[#020617] text-white' : 'bg-slate-50 text-slate-900'
+    }`}>
       {/* Sidebar Integration */}
       <Sidebar 
         isOpen={isSidebarOpen} 

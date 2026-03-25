@@ -119,15 +119,15 @@ const BasicCalculator: React.FC = () => {
   };
 
   return (
-    <div className="glass-card w-full max-w-[380px] mx-auto p-5 flex flex-col gap-4 shadow-2xl border-white/10">
+    <div className="glass-card w-full max-w-[380px] mx-auto p-5 flex flex-col gap-4 shadow-2xl">
       {/* Display */}
       <div className="flex flex-col items-end justify-end px-4 pt-16 pb-4 h-56 rounded-[2rem] mb-2">
-        <div className="text-white/30 text-xl font-light mb-1 h-8 overflow-hidden tracking-wide">
+        <div className="text-current opacity-30 text-xl font-light mb-1 h-8 overflow-hidden tracking-wide">
           {equation}
         </div>
         <div 
           ref={displayRef}
-          className={`font-light tracking-tighter text-white transition-all duration-200 w-full text-right ${getFontSize(display)}`}
+          className={`font-light tracking-tighter text-current transition-all duration-200 w-full text-right ${getFontSize(display)}`}
         >
           {display}
         </div>

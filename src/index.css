@@ -4,21 +4,34 @@
 
 @layer base {
   body {
-    @apply antialiased text-white min-h-[100dvh] overflow-x-hidden selection:bg-accent-purple/30;
+    @apply antialiased min-h-[100dvh] overflow-x-hidden selection:bg-accent-purple/30;
     background-color: #020617;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .light body {
+    background-color: #f8fafc;
+    color: #000000;
   }
 }
 
 @layer components {
   .glass {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(30, 41, 59, 0.4); /* Premium Slate-Grey Dark */
     backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .light .glass {
+    background: rgba(241, 245, 249, 0.8); /* Premium Slate-Grey Light */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
   }
   
   .glass-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(30, 41, 59, 0.3); /* Deeper Grey for Cards */
     backdrop-filter: blur(40px) saturate(150%);
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
@@ -26,8 +39,18 @@
     overflow: hidden;
   }
 
+  .light .glass-card {
+    background: rgba(241, 245, 249, 0.9); /* Subtle Grey Card for Light Mode */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
+  }
+
   .premium-input {
-    @apply w-full h-16 bg-white/[0.02] border border-white/[0.05] rounded-2xl px-6 text-xl text-white focus:outline-none focus:ring-1 focus:ring-accent-purple/40 focus:bg-white/[0.05] transition-all placeholder:text-white/5;
+    @apply w-full h-16 bg-white/[0.02] border border-white/[0.05] rounded-2xl px-6 text-xl focus:outline-none focus:ring-1 focus:ring-accent-purple/40 focus:bg-white/[0.05] transition-all placeholder:text-black/10;
+  }
+
+  .light .premium-input {
+    @apply bg-black/[0.02] border-black/[0.05] text-black placeholder:text-black/30;
   }
 }
 
@@ -40,12 +63,20 @@
   @apply bg-white/10 hover:bg-white/15 text-white active:bg-white/20;
 }
 
+.light .calc-btn-number {
+  @apply bg-black/5 hover:bg-black/10 text-black active:bg-black/15;
+}
+
 .calc-btn-op {
   @apply bg-[#ff9f0a] hover:bg-[#ffb347] text-white shadow-lg active:bg-[#ff9f0a]/80;
 }
 
 .calc-btn-func {
   @apply bg-white/20 hover:bg-white/25 text-white active:bg-white/30;
+}
+
+.light .calc-btn-func {
+  @apply bg-black/10 hover:bg-black/15 text-black active:bg-black/20;
 }
 
 /* Custom Scrollbar - Premium */

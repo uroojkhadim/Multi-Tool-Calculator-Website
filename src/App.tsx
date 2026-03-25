@@ -10,7 +10,7 @@ import History from './components/History';
 import { ThemeProvider } from './context/ThemeContext';
 import { HistoryProvider } from './context/HistoryContext';
 
-type Tab = 'basic' | 'bmi' | 'age' | 'currency' | 'percentage' | 'loan';
+type Tab = 'basic' | 'bmi' | 'age' | 'currency' | 'percentage' | 'loan' | 'history' | 'settings' | 'support';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('basic');
@@ -23,6 +23,9 @@ const App: React.FC = () => {
       case 'currency': return <CurrencyConverter />;
       case 'percentage': return <PercentageCalculator />;
       case 'loan': return <LoanCalculator />;
+      case 'history': return <History />;
+      case 'settings': return <div className="glass-card p-10 text-center"><h2 className="text-2xl font-bold mb-4">Settings</h2><p className="opacity-40">Premium preferences coming soon.</p></div>;
+      case 'support': return <div className="glass-card p-10 text-center"><h2 className="text-2xl font-bold mb-4">Support</h2><p className="opacity-40">Need help? Contact our elite support team.</p></div>;
       default: return <BasicCalculator />;
     }
   };
