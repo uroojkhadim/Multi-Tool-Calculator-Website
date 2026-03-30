@@ -6,8 +6,18 @@ export const HistoryProvider = ({ children }) => {
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('calc_history');
-    if (saved) setHistory(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem('calc_history');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setHistory(parsed);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load history from localStorage:', error);
+      localStorage.removeItem('calc_history');
+    }
   }, []);
 
   const addHistory = (item) => {
