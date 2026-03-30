@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useHistory } from '../context/HistoryContext';
-import { calculate, formatNumber } from '../utils/math';
+import { useHistory } from '../context/HistoryContext.jsx';
+import { calculate, formatNumber } from '../utils/math.js';
 import { Delete, Hash, Minus, Plus, X, Command, Percent } from 'lucide-react';
 
 const BasicCalculator = () => {

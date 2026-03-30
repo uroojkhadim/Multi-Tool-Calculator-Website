@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext.jsx';
 import { Sun, Moon, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar.jsx';
 
 const Layout = ({ children, activeTab, setActiveTab }) => {
   const { theme, toggleTheme } = useTheme();
